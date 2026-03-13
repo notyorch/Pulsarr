@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #1c1c1e;
+            border-radius: 24px;
+            padding: 40px 36px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.85);
+            text-align: center;
+            animation: rise 0.5s cubic-bezier(0.22,1,0.36,1) both;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(24px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes pop {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .expr {
+            font-size: 13px;
+            color: #52525b;
+            letter-spacing: 0.04em;
+            margin-bottom: 20px;
+        }
+
+        .result-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            color: #3b82f6;
+            margin-bottom: 14px;
+        }
+        .result-label.error-label { color: #ef4444; }
+
+        .result-number {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            color: #fff;
+            animation: pop 0.35s cubic-bezier(0.22,1,0.36,1) both;
+        }
+
+        .result-undef {
+            font-size: 22px;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            color: #52525b;
+            animation: pop 0.35s cubic-bezier(0.22,1,0.36,1) both;
+        }
+
+        .error-msg {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f87171;
+            animation: pop 0.35s cubic-bezier(0.22,1,0.36,1) both;
+        }
+
+        .divider {
+            margin: 32px 0;
+            border: none;
+            border-top: 1px solid #1c1c1e;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 13px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.15s ease, transform 0.1s ease;
+        }
+        .btn:hover  { background: #3b82f6; }
+        .btn:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <p class="expr">{{ expr }}</p>
+
+        {% if indefinida %}
+            <p class="result-label error-label">Error</p>
+            <p class="error-msg">Error, operation prohibited</p>
+        {% else %}
+            <p class="result-label">Resultado</p>
+            <p class="result-number">{{ resultado }}</p>
+        {% endif %}
+
+        <hr class="divider">
+        <a href="/" class="btn">Hacer más operaciones</a>
+    </div>
+</body>
+</html>

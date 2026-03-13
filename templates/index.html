@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #1c1c1e;
+            border-radius: 24px;
+            padding: 40px 36px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.85);
+            animation: rise 0.5s cubic-bezier(0.22,1,0.36,1) both;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(24px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes pop {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .heading {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.03em;
+            margin-bottom: 4px;
+        }
+        .subheading {
+            font-size: 13px;
+            color: #52525b;
+            margin-bottom: 32px;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #52525b;
+            margin-bottom: 7px;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            background: #111;
+            color: #f4f4f5;
+            border: 1px solid #27272a;
+            border-radius: 10px;
+            padding: 11px 14px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 400;
+            outline: none;
+            -webkit-appearance: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        input[type="number"]::placeholder { color: #3f3f46; }
+        input[type="number"]:focus,
+        select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.14);
+        }
+        select option { background: #111; }
+
+        .row {
+            display: flex;
+            gap: 12px;
+        }
+        .row .field { flex: 1; }
+        .field { margin-top: 16px; }
+
+        .btn {
+            margin-top: 24px;
+            width: 100%;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease, transform 0.1s ease;
+        }
+        .btn:hover  { background: #3b82f6; }
+        .btn:active { transform: scale(0.98); }
+
+        .result {
+            margin-top: 24px;
+            border-radius: 14px;
+            padding: 22px;
+            text-align: center;
+            animation: pop 0.28s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        .result.value {
+            background: rgba(37,99,235,0.07);
+            border: 1px solid #1e3a8a;
+        }
+        .result.undef {
+            background: #111;
+            border: 1px solid #27272a;
+        }
+        .result-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .result.value .result-label { color: #3b82f6; }
+        .result.undef .result-label { color: #52525b; }
+
+        .result-number {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+        .result.value .result-number { color: #fff; }
+        .result.undef .result-number {
+            color: #52525b;
+            font-weight: 300;
+            font-size: 26px;
+            letter-spacing: -0.01em;
+        }
+
+        .error {
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(127,29,29,0.2);
+            border: 1px solid #7f1d1d;
+            border-radius: 10px;
+            padding: 13px 16px;
+            animation: pop 0.28s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        .error svg { flex-shrink: 0; }
+        .error p { font-size: 13px; color: #f87171; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <p class="heading">Calculadora</p>
+        <p class="subheading">Ingresa los valores y selecciona la operación</p>
+
+        <form method="POST">
+            <div class="row">
+                <div class="field">
+                    <label>Valor A</label>
+                    <input type="number" name="valor_a" step="any" placeholder="10.5" required>
+                </div>
+                <div class="field">
+                    <label>Valor B</label>
+                    <input type="number" name="valor_b" step="any" placeholder="5" required>
+                </div>
+            </div>
+            <div class="field">
+                <label>Operación</label>
+                <select name="operacion">
+                    <option value="sumar">Sumar (+)</option>
+                    <option value="restar">Restar (−)</option>
+                    <option value="multiplicar">Multiplicar (×)</option>
+                    <option value="dividir">Dividir (÷)</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Calcular</button>
+        </form>
+
+        {% if error %}
+        <div class="error">
+            <svg width="15" height="15" fill="#f87171" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+            </svg>
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        {% if resultado is not none %}
+        <div class="result value">
+            <p class="result-label">Resultado</p>
+            <p class="result-number">{{ resultado }}</p>
+        </div>
+        {% endif %}
+
+        {% if indefinida %}
+        <div class="result undef">
+            <p class="result-label">Resultado</p>
+            <p class="result-number">No definida</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
