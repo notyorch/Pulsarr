@@ -114,17 +114,6 @@ flowchart LR
 Typical deployment today:
 Wazuh + Shuffle + custom automations -> Pulsarr /alert -> Telegram human response channel
 
-## Documentation Brand Tokens
-
-These tokens are for docs and visual consistency while the frontend does not exist yet.
-
-- Background: #0A0D14
-- Surfaces: #111420, #161A2C, #1E2435, #2A3047
-- Brand violet: #7C6FF7
-- Violet support: #5548D9, #3D35B0, #A99BFF, #E2DEFF
-- Signal cyan: #4FC9E0
-- Conceptual type pairing: Inter (UI/headings) and JetBrains Mono (metadata)
-
 ## Quick Start
 
 ### Option 1: Installer Script
