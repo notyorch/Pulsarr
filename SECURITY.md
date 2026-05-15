@@ -4,7 +4,7 @@ This file documents the current status of dependency vulnerability scanning and 
 
 ## Status summary
 
-- Dependabot alerts: Partially enable
+- Dependabot alerts: Partially enabled
 - Code scanning alerts: Enable
 - Secret scanning alerts: Enabled
 
