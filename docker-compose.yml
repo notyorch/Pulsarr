@@ -1,33 +1,11 @@
+version: '3.8'
+
 services:
-
-  api:
-    build: ./api
-    container_name: dc-monitor-api
+  telegram-alert-sender:
+    build: .
+    env_file:
+      - .env
     ports:
-      - "8000:8000"
-    volumes:
-      - db_data:/data
-    environment:
-      - PYTHONUNBUFFERED=1
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
+      - "${PORT:-8000}:8000"
     restart: unless-stopped
-
-  simulator:
-    build: ./simulator
-    container_name: dc-monitor-simulator
-    environment:
-      - API_BASE_URL=http://api:8000
-      - INTERVAL_SECONDS=10
-    depends_on:
-      api:
-        condition: service_healthy
-    restart: unless-stopped
-
-volumes:
-  db_data:
-    driver: local
+    # Do not put secrets here. Populate .env (or use an external secrets manager).

@@ -1,0 +1,35 @@
+# Example systemd unit for Pulsarr (unit name kept for compatibility)
+[Unit]
+Description=Pulsarr Event Relay Service
+After=network.target
+
+[Service]
+Type=simple
+# Run as a dedicated unprivileged user (adjust as needed)
+User=telegram
+Group=telegram
+# Set this to the app installation directory (example: /opt/telegram-alert-sender)
+WorkingDirectory=/opt/telegram-alert-sender
+# Optional environment file; create /etc/telegram-alert-sender.env with exported vars
+EnvironmentFile=-/etc/telegram-alert-sender.env
+# Provide defaults that can be overridden in the EnvironmentFile
+Environment="VENV_DIR=/opt/telegram-alert-sender/venv"
+Environment="HOST=0.0.0.0"
+Environment="PORT=8000"
+Environment="GUNICORN_WORKERS=3"
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+RestrictSUIDSGID=true
+
+# ExecStart uses the gunicorn binary inside the virtualenv
+ExecStart=${VENV_DIR}/bin/gunicorn -w ${GUNICORN_WORKERS} -b ${HOST}:${PORT} "app:create_app()"
+Restart=on-failure
+RestartSec=5s
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target

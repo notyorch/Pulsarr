@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 56" width="180" height="56">
+  <circle cx="28" cy="28" r="4" fill="#7C6FF7"/>
+  <circle cx="28" cy="28" r="9" fill="none" stroke="#7C6FF7" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <circle cx="28" cy="28" r="16" fill="none" stroke="#5548D9" stroke-width="1" stroke-dasharray="3 4"/>
+  <circle cx="28" cy="28" r="23" fill="none" stroke="#3D35B0" stroke-width="0.5"/>
+  <line x1="28" y1="5" x2="28" y2="16" stroke="#4FC9E0" stroke-width="2" stroke-linecap="round"/>
+  <text
+    x="62"
+    y="36"
+    font-family="Inter, system-ui, -apple-system, sans-serif"
+    font-size="22"
+    font-weight="600"
+    letter-spacing="-0.6"
+    fill="#E2E8F0"
+  >Pulsar<tspan fill="#7C6FF7">r</tspan></text>
+</svg>
